@@ -1,0 +1,44 @@
+[project]
+name = "hyperagents-adk"
+version = "0.1.0"
+description = "ADK-powered self-learning financial factor research agent"
+authors = [{ name = "HyperAgents-ADK contributors" }]
+license = { text = "Research prototype" }
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "google-adk>=2.0.0",
+    "google-genai>=1.9.0",
+    "mcp>=1.9.0",
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "python-dotenv>=1.0.1",
+    "pyyaml>=6.0.2",
+    "scipy>=1.10.0",
+]
+
+[project.optional-dependencies]
+eval = [
+    "google-adk[eval]>=2.0.0",
+    "pytest>=8.3.2",
+    "pytest-asyncio>=0.23.7",
+    "ruff>=0.4.6",
+]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["hyper_adk", "hyper_adk_mcp", "hyper_engine", "hyper_engine_adk"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

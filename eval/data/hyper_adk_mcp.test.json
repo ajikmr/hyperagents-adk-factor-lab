@@ -1,0 +1,40 @@
+{
+  "eval_set_id": "hyperagents-adk-mcp-eval",
+  "name": "eval/data/hyper_adk_mcp.test.json",
+  "description": "Read-only MCP evals for HyperAgents-ADK.",
+  "eval_cases": [
+    {
+      "eval_id": "mcp_readonly_studies",
+      "conversation": [
+        {
+          "invocation_id": "hyperagents-adk-mcp-001",
+          "user_content": {
+            "parts": [
+              {
+                "text": "List the HyperAgents-ADK studies through MCP and explain what the MCP server can and cannot do."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should use or describe MCP read-only tools, list available curated studies, explain evidence caveats, and state that MCP cannot run smoke cycles, launch Docker, edit files, or execute arbitrary generated code."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "hyper_adk_mcp",
+        "user_id": "reviewer",
+        "state": {}
+      }
+    }
+  ]
+}

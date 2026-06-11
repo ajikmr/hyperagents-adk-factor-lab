@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Environments and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.jsonl
+credentials*.json
+service-account*.json
+
+# Build artifacts
+build/
+dist/
+.venv/
+venv/
+
+# Local runtime artifacts
+artifacts/
+outputs/
+logs/
+.adk/
+hyper_adk/.adk/
+hyper_adk_mcp/.adk/
+hyper_engine_adk/.adk/
+
+# OS/editor
+.DS_Store
+.vscode/

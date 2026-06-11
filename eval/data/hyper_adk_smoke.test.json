@@ -1,0 +1,73 @@
+{
+  "eval_set_id": "hyperagents-adk-smoke-eval",
+  "name": "eval/data/hyper_adk_smoke.test.json",
+  "description": "Smoke-cycle evals for safe synthetic HyperAgents-ADK execution.",
+  "eval_cases": [
+    {
+      "eval_id": "run_safe_smoke_cycle",
+      "conversation": [
+        {
+          "invocation_id": "hyperagents-adk-smoke-001",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Run a smoke self-learning cycle on the bundled S&P 500 smoke data and summarize the factor templates, best validation metric result, meta-agent diagnosis, and safety caveats."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should use synthetic sp500_smoke data, mention whitelisted templates, summarize the best candidate and meta diagnosis, and state that no Docker or arbitrary generated-code execution occurred."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "hyper_engine_adk",
+        "user_id": "reviewer",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "inspect_smoke_boundary",
+      "conversation": [
+        {
+          "invocation_id": "hyperagents-adk-smoke-002",
+          "user_content": {
+            "parts": [
+              {
+                "text": "List local smoke engine runs and inspect the most recent run. Explain how the manifest proves the public-safe execution boundary."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should inspect smoke run manifests, mention docker_launched false, arbitrary_generated_code_executed false, template_execution_only true, and distinguish smoke execution from large-study evidence."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "hyper_adk",
+        "user_id": "reviewer",
+        "state": {}
+      }
+    }
+  ]
+}

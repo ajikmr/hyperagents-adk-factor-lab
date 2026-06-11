@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "rubric_based_final_response_quality_v1": {
+      "threshold": 0.8,
+      "judge_model_options": {
+        "judge_model": "gemini-3.5-flash",
+        "num_samples": 1
+      },
+      "rubrics": [
+        {
+          "rubric_id": "uses_curated_evidence",
+          "rubric_content": {
+            "text_property": "The response uses curated HyperAgents-ADK study evidence and names relevant datasets, studies, or evidence types when applicable."
+          }
+        },
+        {
+          "rubric_id": "separates_validation_and_heldout",
+          "rubric_content": {
+            "text_property": "The response clearly distinguishes validation-selected evidence from held-out test evidence and treats held-out evidence as stronger for generalization."
+          }
+        },
+        {
+          "rubric_id": "states_generalization_fragility",
+          "rubric_content": {
+            "text_property": "The response explains that validation gains can be fragile and should not be overclaimed as robust future performance."
+          }
+        },
+        {
+          "rubric_id": "research_only_finance_boundary",
+          "rubric_content": {
+            "text_property": "The response frames HyperAgents-ADK as a financial research workflow and avoids trading or investment recommendations."
+          }
+        }
+      ]
+    }
+  }
+}

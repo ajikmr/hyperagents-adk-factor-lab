@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant U as User
+    participant R as hyper_adk Root Agent
+    participant T as Task Agent
+    participant E as Smoke Tools
+    participant H as hyper_engine
+    participant M as Meta Agent
+    participant G as Gemini
+
+    U->>R: Ask for self-learning smoke cycle
+    R->>G: Interpret request and select safe tools
+    R->>T: Ask for candidate factor framing
+    T-->>R: Candidate template-oriented factor ideas
+    R->>E: run_smoke_self_learning_cycle
+    E->>H: Evaluate whitelisted templates on synthetic data
+    H-->>E: Metrics and manifest path
+    E-->>R: Smoke manifest summary
+    R->>M: Diagnose best candidate and next check
+    M-->>R: Process-improvement hypothesis
+    R->>G: Compose caveated research response
+    R-->>U: Summary with no Docker/no arbitrary-code caveats

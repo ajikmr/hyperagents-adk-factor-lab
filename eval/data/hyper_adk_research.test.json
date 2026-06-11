@@ -1,0 +1,106 @@
+{
+  "eval_set_id": "hyperagents-adk-research-eval",
+  "name": "eval/data/hyper_adk_research.test.json",
+  "description": "Research-quality evals for curated HyperAgents-ADK evidence.",
+  "eval_cases": [
+    {
+      "eval_id": "validation_vs_heldout_inventory",
+      "conversation": [
+        {
+          "invocation_id": "hyperagents-adk-research-001",
+          "user_content": {
+            "parts": [
+              {
+                "text": "List the available self-learning finance studies and separate validation-selected evidence from held-out test evidence."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should list S&P 500 and CSI300 studies, separate validation-selected evidence from held-out test evidence, state that held-out evidence is stronger for generalization, and avoid claiming market-beating performance."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "hyper_adk",
+        "user_id": "reviewer",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "task_meta_roles",
+      "conversation": [
+        {
+          "invocation_id": "hyperagents-adk-research-002",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Explain the task-agent and meta-agent roles in this ADK version and how they differ from the original Docker-based HyperAgents loop."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should explain that the task agent proposes factor candidates, the meta agent diagnoses results and proposes process improvements, and the public ADK demo does not directly edit files, launch Docker, or execute arbitrary generated code."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "hyper_adk",
+        "user_id": "reviewer",
+        "state": {}
+      }
+    },
+    {
+      "eval_id": "patch_example_explanation",
+      "conversation": [
+        {
+          "invocation_id": "hyperagents-adk-research-003",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Inspect the S&P 500 task-agent patch example and explain what the meta process changed."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should mention robust factor guidance, cross-sectional normalization, fallback behavior, anti-overfitting guidance, sanitized excerpt caveats, and no financial-performance claim."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "hyper_adk",
+        "user_id": "reviewer",
+        "state": {}
+      }
+    }
+  ]
+}

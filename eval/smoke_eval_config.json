@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "rubric_based_final_response_quality_v1": {
+      "threshold": 0.8,
+      "judge_model_options": {
+        "judge_model": "gemini-3.5-flash",
+        "num_samples": 1
+      },
+      "rubrics": [
+        {
+          "rubric_id": "labels_synthetic_data",
+          "rubric_content": {
+            "text_property": "The response states that the smoke run uses bundled synthetic sample data and that the data is for pipeline verification only."
+          }
+        },
+        {
+          "rubric_id": "mentions_whitelisted_templates",
+          "rubric_content": {
+            "text_property": "The response explains that the smoke cycle evaluates whitelisted project-owned factor templates rather than arbitrary generated Python."
+          }
+        },
+        {
+          "rubric_id": "reports_execution_boundary",
+          "rubric_content": {
+            "text_property": "The response states that the public smoke path does not launch Docker and does not execute arbitrary generated code."
+          }
+        },
+        {
+          "rubric_id": "includes_meta_diagnosis",
+          "rubric_content": {
+            "text_property": "The response includes or summarizes the meta-agent diagnosis or next validation check from the smoke manifest."
+          }
+        }
+      ]
+    }
+  }
+}

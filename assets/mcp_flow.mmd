@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant U as User
+    participant C as hyper_adk_mcp Agent
+    participant S as ADK McpToolset
+    participant M as hyper_adk.mcp_server
+    participant R as Read-Only Tools
+
+    U->>C: Ask for studies, patches, or smoke manifests through MCP
+    C->>S: Select read-only MCP tool
+    S->>M: stdio MCP call_tool
+    M->>R: Execute inspection/classification function
+    R-->>M: JSON result
+    M-->>S: MCP TextContent JSON
+    S-->>C: Tool response
+    C-->>U: Caveated research answer

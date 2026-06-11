@@ -1,0 +1,91 @@
+{
+  "version": "0.1.0",
+  "project": "HyperAgents-ADK Self-Learning Factor Lab",
+  "global_caveats": [
+    "Patch examples are curated excerpts from larger local research artifacts, not full generated output directories.",
+    "The public repo excludes Python cache directories, binary diff noise, original full datasets, and full model chat logs.",
+    "credentials, API keys, and secrets are not included.",
+    "Patch examples illustrate how the self-learning process changed prompts or fallback logic; they are not standalone proof of financial performance.",
+    "Validation-selected changes can still overfit and must be checked against held-out evidence."
+  ],
+  "examples": [
+    {
+      "id": "sp500_task_agent_robust_prompt_and_fallback",
+      "label": "S&P 500 task-agent prompt learned robust factor guidance",
+      "dataset": "sp500",
+      "market": "US equities",
+      "agent_modified": "task_agent",
+      "generation": 3,
+      "source_path": "HyperAgents/outputs_xsection_sp_d/generate_20260508_175830_271662/gen_3/agent_output/model_patch.diff",
+      "source_context": "Self-discovery run on the S&P 500 cross-sectional finance domain.",
+      "change_type": [
+        "task_agent_prompt",
+        "fallback_strategy",
+        "anti_overfitting_guidance"
+      ],
+      "before_issue": "Earlier generated factors could show modest train success but fail validation because prompts allowed fragile formulas, excessive parameters, unstable denominators, and poor cross-sectional normalization.",
+      "after_change": "The task-agent prompt was revised to prefer simple rank-normalized factor families, bounded signals, moderate windows, and anti-overfitting guidance. A fallback strategy generator was added for robustness when model extraction fails.",
+      "sanitized_patch_excerpt": [
+        "+ def _build_fallback_strategy(previous_best=None):",
+        "+     strategy_code = '''import numpy as np",
+        "+ def run_strategy(data: pd.DataFrame, params: dict) -> pd.DataFrame:",
+        "+     df = data.sort_values([\"symbol\", \"date\"]).reset_index(drop=True)",
+        "+     df[\"ret_n\"] = g[\"close\"].pct_change(ret_window)",
+        "+     df[\"volatility\"] = g[\"ret1\"].transform(lambda s: s.rolling(vol_window, min_periods=5).std())",
+        "+     df[\"rev_rank\"] = df.groupby(\"date\")[\"rev_raw\"].transform(cs_rank)",
+        "+     df[\"signal\"] = signal.replace([np.inf, -np.inf], np.nan).clip(-1.5, 1.5).fillna(0.0)",
+        "+ What recent results suggest: some generated factors had modest train success but failed badly on validation.",
+        "+ Prefer simple, well-conditioned signals over clever but unstable constructions.",
+        "+ Strong design preferences: normalize each component cross-sectionally within date before combining.",
+        "+ Signals to avoid: raw unscaled price levels, too many parameters, nearly constant signals, unstable denominators."
+      ],
+      "task_agent_effect": "The task agent became more constrained toward simple OHLCV factor families, cross-sectional ranking, bounded outputs, and robust fallback behavior.",
+      "meta_agent_effect": "The meta process discovered that prompt-level constraints and fallback logic were useful targets for improving future task-agent outputs.",
+      "evaluation_lesson": "Prompt improvements should be judged with validation and held-out checks separately because robustness guidance can still overfit the validation process.",
+      "safety_caveats": [
+        "This patch includes strategy-generation logic, but public ADK demos use whitelisted templates instead of executing arbitrary generated Python.",
+        "The excerpt omits cache files and binary diff noise from the original patch.",
+        "No stock recommendations should be inferred from this patch."
+      ]
+    },
+    {
+      "id": "csi300_task_agent_factor_template_guidance",
+      "label": "CSI300 task-agent prompt learned clearer factor-template guidance",
+      "dataset": "csi300",
+      "market": "China A-share equities",
+      "agent_modified": "task_agent",
+      "generation": 3,
+      "source_path": "HyperAgents/outputs_xsection_csi_c/generate_20260509_012522_028157/gen_3/agent_output/model_patch.diff",
+      "source_context": "Self-discovery run on the CSI300 cross-sectional finance domain.",
+      "change_type": [
+        "task_agent_prompt",
+        "factor_template_guidance",
+        "code_quality_guidance"
+      ],
+      "before_issue": "The prompt was broad and allowed sparse threshold rules, overcomplicated formulas, raw price or volume dependence, and implementation patterns that could produce mostly-NaN signals.",
+      "after_change": "The task-agent prompt was revised toward explicit factor templates: trend plus short-term reversal plus volume confirmation, breakout plus close-location plus volatility penalty, and simple residualized-style blends.",
+      "sanitized_patch_excerpt": [
+        "+ What seems to work best here: robust continuous cross-sectional signals rather than exotic formulas.",
+        "+ Favor medium-horizon momentum with volatility or range scaling.",
+        "+ Favor short-horizon reversal combined against trend continuation.",
+        "+ Favor breakout or distance from recent high-low range midpoint or upper band.",
+        "+ Favor volume confirmation: abnormal volume supporting trend, weak volume penalizing moves.",
+        "+ What to avoid: sparse threshold rules, hard discrete buckets, many if/else branches.",
+        "+ Make the final signal cross-sectional within each date.",
+        "+ Strongly prefer groupby('date')['raw_signal'].rank(pct=True) or simple per-date z-scoring.",
+        "+ Template A: Trend + short-term reversal + volume confirmation.",
+        "+ Template B: Breakout + close location + liquidity/volatility penalty.",
+        "+ Template C: Residualized-style simple blend.",
+        "+ Ensure output columns are exactly: date, symbol, signal."
+      ],
+      "task_agent_effect": "The task agent received a clearer output contract and a smaller set of robust, continuous factor families to search over.",
+      "meta_agent_effect": "The meta process identified that improving instructions and implementation constraints could be more useful than adding unconstrained complexity.",
+      "evaluation_lesson": "Better prompt structure can improve validation behavior, but CSI300 held-out evidence remained mixed and should be explained honestly.",
+      "safety_caveats": [
+        "The excerpt shows research-process improvement, not a deployable trading rule.",
+        "The public ADK smoke engine uses owned whitelisted templates inspired by these patterns, not raw generated code execution.",
+        "No stock recommendations should be inferred from this patch."
+      ]
+    }
+  ]
+}

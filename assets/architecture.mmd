@@ -1,0 +1,35 @@
+flowchart TD
+    User[Reviewer / Quant Researcher] --> Web[ADK Web / ADK CLI]
+    Web --> Root[Root Agent: hyper_adk]
+    Root --> Gemini[Gemini via Vertex AI]
+    Root --> NativeTools[Native ADK Function Tools]
+    Root --> TaskAgent[Task Agent: hyper_task_agent]
+    Root --> MetaAgent[Meta Agent: hyper_meta_agent]
+    Root --> Analysts[Research / Evaluation / Safety Analysts]
+
+    TaskAgent --> FactorIdeas[Candidate factor ideas and template choices]
+    MetaAgent --> Diagnostics[Run diagnosis and process-improvement hypotheses]
+
+    NativeTools --> StudyManifest[Curated Study Manifest]
+    NativeTools --> PatchExamples[Sanitized Patch Examples]
+    NativeTools --> SmokeTools[Safe Smoke Tools]
+    NativeTools --> SafetyTools[Finance Safety Tools]
+
+    SmokeTools --> SmokeEngine[hyper_engine]
+    SmokeEngine --> SampleData[Synthetic Smoke Data]
+    SmokeEngine --> Templates[Whitelisted Factor Templates]
+    SmokeEngine --> Evaluator[Cross-Sectional Evaluator]
+    SmokeEngine --> Artifacts[Local Run Manifests]
+
+    MCPAgent[MCP Client Agent: hyper_adk_mcp] --> MCPToolset[ADK McpToolset]
+    MCPToolset --> MCPServer[Read-Only MCP Server]
+    MCPServer --> StudyManifest
+    MCPServer --> PatchExamples
+    MCPServer --> Artifacts
+    MCPServer --> SafetyTools
+
+    Original[Original HyperAgents Docker Loop] -. optional/private only .-> ResearchArtifacts[Large-Study Evidence]
+    ResearchArtifacts --> StudyManifest
+    ResearchArtifacts --> PatchExamples
+
+    SafetyTools --> Refusal[No investment advice]

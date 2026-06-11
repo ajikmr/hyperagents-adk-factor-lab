@@ -1,0 +1,212 @@
+{
+  "version": "0.1.0",
+  "project": "HyperAgents-ADK Self-Learning Factor Lab",
+  "global_caveats": [
+    "The public repository will include synthetic smoke data only, not the full market panels used in the large study.",
+    "Validation-selected metrics summarize the best validation outcome reached during search and should not be interpreted as final out-of-sample performance.",
+    "Held-out test metrics are stronger evidence for future generalization and show that validation gains can be fragile.",
+    "All results are research evidence for factor discovery workflows, not investment advice or trade recommendations."
+  ],
+  "studies": [
+    {
+      "id": "sp500_default_validation",
+      "label": "S&P 500 original split validation-selected outcomes",
+      "dataset": "sp500",
+      "market": "US equities",
+      "split_profile": "default",
+      "evidence_type": "validation_selected",
+      "runs": 5,
+      "source": "paper_workshop/paper_draft/main_workshop_v4.tex Table 1",
+      "conditions": [
+        {
+          "id": "expert",
+          "label": "Expert prompt baseline",
+          "parent_selection": "frozen",
+          "combined_score_mean": 0.20,
+          "combined_score_std": 0.27,
+          "rank_ic_mean": 0.019,
+          "rank_ic_std": 0.006,
+          "sharpe_mean": 0.02,
+          "sharpe_std": 0.22
+        },
+        {
+          "id": "self_discovery",
+          "label": "Self-discovery",
+          "parent_selection": "score_child_prop",
+          "combined_score_mean": 0.84,
+          "combined_score_std": 0.31,
+          "rank_ic_mean": 0.013,
+          "rank_ic_std": 0.003,
+          "sharpe_mean": 0.70,
+          "sharpe_std": 0.28
+        },
+        {
+          "id": "self_discovery_ucb",
+          "label": "Self-discovery + UCB",
+          "parent_selection": "ucb",
+          "combined_score_mean": 1.06,
+          "combined_score_std": 0.45,
+          "rank_ic_mean": 0.019,
+          "rank_ic_std": 0.005,
+          "sharpe_mean": 0.87,
+          "sharpe_std": 0.45
+        }
+      ],
+      "takeaway": "On the original S&P 500 validation split, UCB had the strongest validation-selected combined score, while the expert baseline remained competitive on Rank IC.",
+      "caveats": [
+        "This is validation-selected search evidence, not held-out future-test evidence.",
+        "The strongest combined-score result is partly driven by Sharpe, not uniformly better Rank IC."
+      ]
+    },
+    {
+      "id": "csi300_default_validation",
+      "label": "CSI300 original split validation-selected outcomes",
+      "dataset": "csi300",
+      "market": "China A-share equities",
+      "split_profile": "default",
+      "evidence_type": "validation_selected",
+      "runs": 5,
+      "source": "paper_workshop/paper_draft/main_workshop_v4.tex Table 1",
+      "conditions": [
+        {
+          "id": "expert",
+          "label": "Expert prompt baseline",
+          "parent_selection": "frozen",
+          "combined_score_mean": 0.52,
+          "combined_score_std": 0.47,
+          "rank_ic_mean": 0.034,
+          "rank_ic_std": 0.011,
+          "sharpe_mean": 0.17,
+          "sharpe_std": 0.42
+        },
+        {
+          "id": "self_discovery",
+          "label": "Self-discovery",
+          "parent_selection": "score_child_prop",
+          "combined_score_mean": 1.27,
+          "combined_score_std": 0.35,
+          "rank_ic_mean": 0.028,
+          "rank_ic_std": 0.015,
+          "sharpe_mean": 1.00,
+          "sharpe_std": 0.31
+        },
+        {
+          "id": "self_discovery_ucb",
+          "label": "Self-discovery + UCB",
+          "parent_selection": "ucb",
+          "combined_score_mean": 1.23,
+          "combined_score_std": 0.35,
+          "rank_ic_mean": 0.017,
+          "rank_ic_std": 0.016,
+          "sharpe_mean": 1.06,
+          "sharpe_std": 0.30
+        }
+      ],
+      "takeaway": "On the original CSI300 validation split, score-child-prop produced the strongest validation-selected combined score, while the expert baseline had stronger validation Rank IC.",
+      "caveats": [
+        "This is validation-selected search evidence and can overstate future generalization.",
+        "The best combined-score condition is not the best Rank IC condition."
+      ]
+    },
+    {
+      "id": "sp500_default_heldout_test",
+      "label": "S&P 500 original split held-out test outcomes",
+      "dataset": "sp500",
+      "market": "US equities",
+      "split_profile": "default",
+      "evidence_type": "heldout_test",
+      "runs": 5,
+      "source": "HyperAgents/heldout_test_eval/SP500_XSECTION_*/summary.json",
+      "conditions": [
+        {
+          "id": "expert",
+          "label": "Expert prompt baseline",
+          "parent_selection": "frozen",
+          "combined_score_mean": -0.4345,
+          "combined_score_std": 0.1392,
+          "rank_ic_mean": 0.0077,
+          "rank_ic_std": 0.0034,
+          "sharpe_mean": -0.5115,
+          "sharpe_std": 0.1217
+        },
+        {
+          "id": "self_discovery",
+          "label": "Self-discovery",
+          "parent_selection": "score_child_prop",
+          "combined_score_mean": -0.5983,
+          "combined_score_std": 0.1957,
+          "rank_ic_mean": 0.0011,
+          "rank_ic_std": 0.0064,
+          "sharpe_mean": -0.5994,
+          "sharpe_std": 0.1919
+        },
+        {
+          "id": "self_discovery_ucb",
+          "label": "Self-discovery + UCB",
+          "parent_selection": "ucb",
+          "combined_score_mean": -0.6286,
+          "combined_score_std": 0.7316,
+          "rank_ic_mean": 0.0037,
+          "rank_ic_std": 0.0012,
+          "sharpe_mean": -0.6324,
+          "sharpe_std": 0.7308
+        }
+      ],
+      "takeaway": "On untouched S&P 500 future test data, the frozen expert baseline was strongest on combined score, Rank IC, and Sharpe among the validation-selected winners.",
+      "caveats": [
+        "This result reverses the practical interpretation of the validation-selected table.",
+        "All average combined scores are negative on this held-out test window."
+      ]
+    },
+    {
+      "id": "csi300_default_heldout_test",
+      "label": "CSI300 original split held-out test outcomes",
+      "dataset": "csi300",
+      "market": "China A-share equities",
+      "split_profile": "default",
+      "evidence_type": "heldout_test",
+      "runs": 5,
+      "source": "HyperAgents/heldout_test_eval/CSI300_XSECTION_*/summary.json",
+      "conditions": [
+        {
+          "id": "expert",
+          "label": "Expert prompt baseline",
+          "parent_selection": "frozen",
+          "combined_score_mean": -0.4963,
+          "combined_score_std": 0.1783,
+          "rank_ic_mean": 0.0334,
+          "rank_ic_std": 0.0039,
+          "sharpe_mean": -0.8305,
+          "sharpe_std": 0.1792
+        },
+        {
+          "id": "self_discovery",
+          "label": "Self-discovery",
+          "parent_selection": "score_child_prop",
+          "combined_score_mean": -0.8139,
+          "combined_score_std": 0.4609,
+          "rank_ic_mean": -0.0026,
+          "rank_ic_std": 0.0149,
+          "sharpe_mean": -0.7875,
+          "sharpe_std": 0.3635
+        },
+        {
+          "id": "self_discovery_ucb",
+          "label": "Self-discovery + UCB",
+          "parent_selection": "ucb",
+          "combined_score_mean": -0.4903,
+          "combined_score_std": 0.5159,
+          "rank_ic_mean": -0.0066,
+          "rank_ic_std": 0.0166,
+          "sharpe_mean": -0.4247,
+          "sharpe_std": 0.4330
+        }
+      ],
+      "takeaway": "On untouched CSI300 future test data, UCB was marginally strongest on combined score and Sharpe, but the expert baseline had much stronger positive Rank IC.",
+      "caveats": [
+        "This is mixed held-out evidence, not a clean self-discovery win.",
+        "The strongest combined-score condition has negative average Rank IC."
+      ]
+    }
+  ]
+}
