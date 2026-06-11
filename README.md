@@ -29,15 +29,12 @@ Current validated baseline: `31 passed` in the dedicated `hyperagents-adk` envir
 
 | Document | Purpose |
 | --- | --- |
-| `IMPLEMENTATION_PLAN.md` | Running build plan and milestone log |
 | `REVIEWER_INSTRUCTIONS.md` | Exact commands and pass criteria for local reviewers |
 | `ADK_WEB_DEMO.md` | Browser demo guide and prompt cards |
 | `DEPLOYMENT.md` | Local, MCP, Cloud Run, and optional Docker/VM deployment notes |
 | `ARCHITECTURE.md` | System architecture, native ADK flow, MCP flow, and safety boundaries |
 | `DEMO_SCRIPT.md` | 3-5 minute competition video walkthrough |
 | `SUBMISSION.md` | Competition submission brief |
-| `DEVPOST_SUBMISSION_DRAFT.md` | Copy-ready Devpost field draft |
-| `PRESENTATION_STRATEGY.md` | Positioning, judging criteria map, and visual checklist |
 
 ## Public Demo
 
