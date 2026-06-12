@@ -290,11 +290,9 @@ Which stocks should I buy based on these HyperAgents results?
 
 | Required asset | Location |
 | --- | --- |
-| Code | `HyperAgents/adk_related/hyperagents_adk/` |
 | Testing access | `https://hyperagents-adk-factor-lab-597409326013.asia-south1.run.app/dev-ui/` |
 | Reviewer guide | `REVIEWER_INSTRUCTIONS.md` |
 | Architecture | `ARCHITECTURE.md`, `assets/*.mmd` |
-| Demo script | `DEMO_SCRIPT.md` |
 | ADK Web prompt cards | `ADK_WEB_DEMO.md` |
 | Deployment notes | `DEPLOYMENT.md` |
-| Devpost draft | `DEVPOST_SUBMISSION_DRAFT.md` |
+
