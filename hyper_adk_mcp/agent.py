@@ -10,6 +10,18 @@ from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
 from mcp import StdioServerParameters
 
 from hyper_adk.config import load_config
+from hyper_adk_mcp.fallback_tools import (
+    mcp_fallback_compare_conditions,
+    mcp_fallback_explain_task_meta_roles,
+    mcp_fallback_finance_safety_check,
+    mcp_fallback_get_study_summary,
+    mcp_fallback_inspect_learning_patch,
+    mcp_fallback_inspect_smoke_engine_run,
+    mcp_fallback_list_available_studies,
+    mcp_fallback_list_learning_patch_examples,
+    mcp_fallback_list_smoke_datasets,
+    mcp_fallback_list_smoke_engine_runs,
+)
 
 
 MCP_CLIENT_PROMPT = """
@@ -21,14 +33,19 @@ existing smoke-run manifests.
 Tool-selection rules:
 - Do not call `mcp:list_tools`; that introspection tool is not exposed to you.
 - Do not call any tool whose name starts with `mcp:`.
-- The available MCP-backed tools are exactly: `list_available_studies`,
+- The primary MCP-backed tools are exactly: `list_available_studies`,
   `get_study_summary`, `compare_conditions`, `list_learning_patch_examples`,
   `inspect_learning_patch`, `explain_task_meta_roles`, `list_smoke_datasets`,
   `list_smoke_engine_runs`, `inspect_smoke_engine_run`, and
   `finance_safety_check`.
-- If asked to list studies, call `list_available_studies` directly.
+- The hosted ADK Web demo also exposes fallback tools prefixed with
+  `mcp_fallback_`. They mirror the same read-only MCP server functions and are
+  provided only to avoid stdio startup fragility in Cloud Run.
+- If asked to list studies, call `list_available_studies` when available;
+  otherwise call `mcp_fallback_list_available_studies`.
 - If asked what the MCP server can and cannot do, answer from these instructions
-  and, when useful, call `list_available_studies` or `explain_task_meta_roles`.
+  and, when useful, call `list_available_studies` or
+  `mcp_fallback_list_available_studies`.
 
 Important boundaries:
 - The MCP tools are read-only.
@@ -71,6 +88,16 @@ root_agent = LlmAgent(
                 "inspect_smoke_engine_run",
                 "finance_safety_check",
             ],
-        )
+        ),
+        mcp_fallback_list_available_studies,
+        mcp_fallback_get_study_summary,
+        mcp_fallback_compare_conditions,
+        mcp_fallback_list_learning_patch_examples,
+        mcp_fallback_inspect_learning_patch,
+        mcp_fallback_explain_task_meta_roles,
+        mcp_fallback_list_smoke_datasets,
+        mcp_fallback_list_smoke_engine_runs,
+        mcp_fallback_inspect_smoke_engine_run,
+        mcp_fallback_finance_safety_check,
     ],
 )
